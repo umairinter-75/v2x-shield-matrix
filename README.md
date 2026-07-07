@@ -13,7 +13,7 @@ The system is divided into three core sequentially executed modules:
 ### Module 1: Sensor Fusion & Temporal Alignment
 * **Objective:** Collects asynchronous inbound V2X data streams and cross-references them against the host vehicle’s local physical sensors (low-cost commodity hardware like optical Cameras, standard Radar, Ultrasonic sensors, and GPS) using physics-based dead-reckoning interpolation to verify spatial consistency without relying on expensive infrastructure additions.
 
-### Module 2: Edge AI Threat Filtering
+### [Module 2: Edge AI Threat Filtering](MODULE_2_SPEC.md)
 * **Objective:** A lightweight, low-overhead behavioral anomaly engine (utilizing Isolation Forests/sequential networks) that analyzes continuous rolling time-series telemetry windows to catch malicious signatures like Sybil attacks or kinematic violations.
 
 ### Module 3: Matrix Trust & Mitigation Engine
