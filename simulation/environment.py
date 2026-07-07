@@ -76,7 +76,7 @@ class V2XIntersectionSimulator:
                 "timestamp_sender": current_timestamp,
                 "pos_x": round(state["x"], 2),
                 "pos_y": round(state["y"], 2),
-                "speed_mph": round(state["v_x"] * 2.237, 1), # Convert m/s to mph for easy reading
+                "speed_kmh": round(state["v_x"] * 3.6, 1), # Convert m/s to km/h for standard automotive telemetry
                 "behavior_status": state["status"]
             }
             packets.append(packet)
