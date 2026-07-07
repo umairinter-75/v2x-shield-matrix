@@ -53,7 +53,7 @@ if __name__ == "__main__":
         "timestamp_sender": time.time(),
         "pos_x": 40.0,
         "pos_y": 0.0,
-        "speed_mph": 44.7,
+        "speed_kmh": 72.0,  # Converted to km/h for standard automotive telemetry
         "behavior_status": "Normal Driving"
     }]
     
