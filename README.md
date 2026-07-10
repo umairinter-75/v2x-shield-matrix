@@ -13,9 +13,36 @@ The system is divided into three core sequentially executed modules:
 ### Module 1: Sensor Fusion & Temporal Alignment
 * **Objective:** Collects asynchronous inbound V2X data streams and cross-references them against the host vehicle’s local physical sensors (low-cost commodity hardware like optical Cameras, standard Radar, Ultrasonic sensors, and GPS) using physics-based dead-reckoning interpolation to verify spatial consistency without relying on expensive infrastructure additions.
 
-### [Module 2: Edge AI Threat Filtering](MODULE_2_SPEC.md)
-* **Objective:** A lightweight, low-overhead behavioral anomaly engine (utilizing Isolation Forests/sequential networks) that analyzes continuous rolling time-series telemetry windows to catch malicious signatures like Sybil attacks or kinematic violations.
+## 🛠️ Module 2 Implementation: Edge AI Behavioral Threat Filtering (Active)
 
+Module 2 has transitioned from architectural specification to a functional Python implementation located in `simulation/threat_filter.py`. This module operates as a zero-dependency, ultra-lightweight processing layer optimized for resource-constrained edge computing environments (onboard vehicle computers).
+
+### 📐 Implemented Detection Tracks
+
+1. **Track 1: Inter-Node Spatial-Temporal Fingerprinting (`detect_sybil_fingerprints`)**
+   * **Mechanism:** Dynamically keys localized coordinates to identify overlapping physical space signatures.
+   * **Target:** Intercepts Sybil/masquerade loops where distinct virtual node IDs report near-identical trajectory matrices and speed indicators to create artificial traffic patterns.
+
+2. **Track 2: Stateful Trajectory Forest Evaluation (`evaluate_lightweight_forest`)**
+   * **Mechanism:** Maintains a compressed rolling history matrix (bounded memory tracking windows) per node ID to calculate frame-to-frame delta jumps.
+   * **Target:** Identifies kinematic violations, flagging stealthy trajectory drift or sudden instantaneous coordinate teleportation attacks exceeding baseline physics constraints.
+
+---
+
+## 🧪 Verification & Integration Harness
+
+A dedicated test pipeline has been integrated under the `tests/` directory to validate detection accuracy against active spoofing injectors.
+
+### Directory Structure
+'''
+v2x-shield-matrix/
+├── simulation/
+│   ├── environment.py
+│   ├── attack_injector.py
+│   └── threat_filter.py        # Implemented detection engine
+└── tests/
+    ├── __init__.py
+    └── test_threat_filter.py   # Deterministic integration suite
 ### Module 3: Matrix Trust & Mitigation Engine
 * **Objective:** Manages a fluid reputation system (Trust Scores) for surrounding nodes. When an anomaly is verified, this engine drops firewalls at the local OS level to block the attacker's network sockets and signs/broadcasts a cryptographic mesh warning to alert neighboring clean vehicles.
 
